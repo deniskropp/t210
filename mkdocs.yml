@@ -1,0 +1,16 @@
+site_name: Klipper SDK
+site_description: A comprehensive SDK for the Klipper clipboard manager.
+theme:
+  name: material
+  features:
+    - content.code.copy
+    - navigation.expand
+    - navigation.indexes
+
+plugins:
+  - search
+  - autorefs
+
+nav:
+  - Home: index.md
+  - API Reference: api.md

@@ -1,0 +1,21 @@
+- name: 009_document_sdk
+  type: hand_off_task
+  created_at: "2026-01-16"
+  phase: documentation_and_release_phase
+  status: completed
+  priority: high
+  context:
+    project_root: "/home/einrichten/t210"
+    orchestration_file: "docs/spec/klipper_sdk_orchestration.kl"
+    current_state: "SDK v0.1.0 functional. Basic README exists."
+  recipients:
+    - agent: Lyra
+      role: Tech Writer
+      instruction: "Generate comprehensive API documentation."
+    - agent: Lyra
+      role: Tech Writer
+      instruction: "Create an examples directory with usage scripts."
+  objective: "Create full API documentation and example scripts for Klipper SDK v0.1.0."
+  next_steps:
+    - "Release v0.1.0 to PyPI (simulated)."
+    - "Close initial development phase."

@@ -29,6 +29,10 @@ lint = [
   "ruff",
   "mypy",
 ]
+docs = [
+  "mkdocs-material",
+  "mkdocs-autorefs",
+]
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/klipper_sdk"]
