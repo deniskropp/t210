@@ -1,0 +1,63 @@
+---
+id: "011"
+title: Detailed Implementation Planning & Requirements Confirmation
+author: Antigravity
+recipient: Lyra
+status: open
+created: 2026-01-16
+---
+
+# Context
+We have completed a simulated v0.1.0 release of the Klipper SDK. We are now transitioning to the robust development of the core SDK. To ensure the architecture and implementation meet specific user needs and modern standards, we need to clarify several key technical decisions.
+
+# Objectives
+1.  Review the **Implementation Questionnaire** (below) and provide definitive answers/decisions for each point.
+2.  Based on these answers, creating a detailed `implementation_plan.md` for the next phase of development.
+3.  Update architectural diagrams or specifications if decisions require structural changes.
+
+# Constraints
+-   Must consistently use **Async** (FastAPI, httpx).
+-   Must strictly use **Pydantic v2**.
+-   Must use **Rich** for CLI.
+-   Codebase must be typed strict enough to pass `mypy --strict` eventually.
+
+# Resources
+-   `docs/spec/klipper_sdk_orchestration.kl`
+-   Existing `src/` structure.
+
+# Implementation Questionnaire (To Be Answered)
+
+## 1. Architecture & Patterns
+-   [ ] **Core Structure**: Hexagonal (ports & adapters) vs Layered (api -> service -> repo)?
+-   [ ] **Dependency Injection**: `fastapi.Depends`, `lagom`, or custom?
+-   [ ] **Shared Components**: `src/shared` as a module or standalone package?
+-   [ ] **Design Patterns**: Factory, Strategy, etc. assignments?
+-   [ ] **Configuration**: `pydantic-settings` (.env) vs others?
+
+## 2. API Surface & Usability
+-   [ ] **Sync Support**: Async-only or Wrapper?
+-   [ ] **Naming Conventions**: `KlipperClient` vs `Client`?
+-   [ ] **Python Version**: 3.10+ exclusive?
+-   [ ] **Stability**: Decorators for experimental features?
+-   [ ] **Middleware**: Custom hook system needed?
+
+## 3. Data Management (Pydantic v2)
+-   [ ] **Validation**: Strict or Lax by default?
+-   [ ] **Serialization**: Logic for MsgPack/Protobuf needed?
+-   [ ] **Secrets**: `SecretStr` usage policy?
+-   [ ] **DTOs**: Separate DTOs or shared Models?
+-   [ ] **Custom Types**: Specific ID formats?
+
+## 4. Integration (httpx)
+-   [ ] **Client Lifecycle**: Singleton, Context, or Dependency?
+-   [ ] **Resilience**: `tenacity` integration for retries?
+-   [ ] **Offline**: Error handling strategy?
+-   [ ] **Headers**: Standardized headers list?
+-   [ ] **Errors**: Mapping HTTP codes to Exceptions?
+
+## 5. DevOps
+-   [ ] **CLI**: Rich theme/verbosity standards?
+-   [ ] **Testing**: directory split `tests/unit` vs `tests/integration`?
+-   [ ] **Docs**: Google vs NumPy style?
+-   [ ] **Release**: Definition of v0.2.0 MVP?
+-   [ ] **Typing**: `py.typed` + `.pyi` stubs required?
