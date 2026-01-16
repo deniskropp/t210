@@ -1,0 +1,21 @@
+- name: 007_implement_exceptions
+  type: hand_off_task
+  created_at: "2026-01-16"
+  phase: implementation_phase
+  status: pending
+  priority: high
+  context:
+    project_root: "/home/einrichten/t210"
+    orchestration_file: "docs/spec/klipper_sdk_orchestration.kl"
+    architecture_file: "docs/spec/klipper_sdk_architecture.kl"
+    current_state: "Client implemented. Need specific exceptions for error handling."
+  recipients:
+    - agent: Kodax
+      role: Engineer
+      instruction: "Define the custom exception hierarchy."
+  objective: "Implement SDK-specific exceptions in 'src/klipper_sdk/exceptions/base.py'."
+  next_steps:
+    - "Create 'src/klipper_sdk/exceptions/base.py'."
+    - "Define 'KlipperSDKError' base exception."
+    - "Define 'ConnectionError', 'DataFormatError', 'AuthorizationError', etc."
+    - "Verify importability."
