@@ -1,0 +1,21 @@
+- name: 006_implement_client_implementation
+  type: hand_off_task
+  created_at: "2026-01-16"
+  phase: implementation_phase
+  status: pending
+  priority: high
+  context:
+    project_root: "/home/einrichten/t210"
+    orchestration_file: "docs/spec/klipper_sdk_orchestration.kl"
+    architecture_file: "docs/spec/klipper_sdk_architecture.kl"
+    current_state: "Interfaces defined. Ready to implement concrete client."
+  recipients:
+    - agent: Kodax
+      role: Engineer
+      instruction: "Implement the concrete SDK client class."
+  objective: "Implement 'KlipperClient' in 'src/klipper_sdk/client/client.py'."
+  next_steps:
+    - "Create 'src/klipper_sdk/client/client.py'."
+    - "Implement 'KlipperClient' class implementing 'IClipboard' and 'IHistory'."
+    - "Stub the connection logic for now (or implement a mock connection)."
+    - "Add unit tests in 'tests/test_client.py'."

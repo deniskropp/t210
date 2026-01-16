@@ -2,20 +2,18 @@
   type: hand_off_task
   created_at: "2026-01-16"
   phase: implementation_phase
-  status: pending
+  status: completed
   priority: high
   context:
     project_root: "/home/einrichten/t210"
     orchestration_file: "docs/spec/klipper_sdk_orchestration.kl"
     architecture_file: "docs/spec/klipper_sdk_architecture.kl"
-    current_state: "Core models ready. Implementing abstract interfaces."
+    current_state: "Core interfaces (IClipboard, IHistory) implemented and verified."
   recipients:
     - agent: Kodax
       role: Engineer
       instruction: "Define the abstract base classes (ABC) for the SDK interfaces."
   objective: "Implement 'IClipboard' and 'IHistory' protocols/ABCs in 'src/klipper_sdk/core/interfaces.py'."
   next_steps:
-    - "Create 'src/klipper_sdk/core/interfaces.py'."
-    - "Define 'IClipboard' with abstract async methods."
-    - "Define 'IHistory' with abstract async methods."
-    - "Ensure type hinting uses models from 'models.py'."
+    - "Proceed to 'implement_sdk_client'."
+    - "Create task for concrete client implementation."
