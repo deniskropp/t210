@@ -19,6 +19,36 @@ The Klipper SDK provides a robust, asynchronous interface for interacting with t
 pip install klipper-sdk
 ```
 
+## Quick Start
+
+Here is a simple example of how to use the `KlipperClient` to set and retrieve clipboard content:
+
+```python
+import asyncio
+from klipper_sdk.client.client import KlipperClient
+from klipper_sdk.core.models import ClipboardContent
+
+async def main():
+    client = KlipperClient()
+
+    # Set content
+    content = ClipboardContent(data="Hello Klipper!", mime_type="text/plain")
+    await client.set_content(content)
+    print("Content set!")
+
+    # Retrieve content
+    fetched = await client.get_content()
+    print(f"Retrieved: {fetched.data}")
+
+    # Monitor changes
+    print("Monitoring (press Ctrl+C to stop)...")
+    async for item in client.monitor():
+        print(f"Clipboard changed: {item.data}")
+
+if __name__ == "__main__":
+    asyncio.run(main())
+```
+
 ## Development
 
 1. Clone the repository.
