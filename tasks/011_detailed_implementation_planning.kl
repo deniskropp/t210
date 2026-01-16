@@ -63,10 +63,22 @@ We have completed a simulated v0.1.0 release of the Klipper SDK. We are now tran
 -   [x] **Typing**: `py.typed` + `.pyi` stubs required?
 
 ## Decisions Log
-- **Architecture**: Hexagonal
-- **DI**: fastapi.Depends
-- **Shared**: Module
-- **API**: Async+Wrapper, KlipperClient, 3.10+
-- **Data**: Strict, SecretStr, DTOs
-- **Integration**: Depends, tenacity, custom exceptions
-- **DevOps**: Rich, Split tests, Google style, py.typed
+## Decisions Log
+- **Architecture**: Hexagonal (Ports & Adapters). Service Layer handles sanitization (strict UTF-8).
+- **DI**: `fastapi.Depends` (compatible with `lagom` if needed later).
+- **Shared**: `src/shared` as a module.
+- **API**: 
+    - `KlipperClient` (Async, Context Manager required).
+    - `KlipperSyncClient` (Wrapper using `asyncio.run`).
+    - Methods return `None` on empty, `KlipperClientError` on failure.
+    - Python 3.10+ strict.
+- **Data**: Pydantic v2 Strict mode by default. No implicit bytes->str casting.
+- **Integration**: 
+    - `httpx` for network.
+    - `tenacity` for retries (max 3 attempts).
+    - Adapter Fallback: Defaults to `InMemoryAdapter` with warning.
+- **DevOps**: 
+    - `rich` for CLI.
+    - Tests split: `tests/unit`, `tests/integration`.
+    - Google-style docstrings.
+    - `py.typed` included.
