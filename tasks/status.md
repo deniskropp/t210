@@ -7,3 +7,4 @@ Current status:
 - Release: v0.1.0 (Simulated) RELEASED
 - Current Focus: v0.2.0 Core Foundation (Task 012) -> COMPLETE
 - Next: Service Layer & KlipperClient (Task 013)
+- Queued: Detailed Documentation (Task 014)
