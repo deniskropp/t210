@@ -1,0 +1,23 @@
+- name: 010_release_sdk
+  type: orchestration_task
+  created_at: "2026-01-16"
+  phase: documentation_and_release_phase
+  status: pending
+  priority: critical
+  context:
+    project_root: "/home/einrichten/t210"
+    orchestration_file: "docs/spec/klipper_sdk_orchestration.kl"
+    current_state: "Documentation completed. All verification tests passed."
+  recipients:
+    - agent: Kodax
+      role: Build Engineer
+      instruction: "Build the distribution packages (sdist, wheel)."
+    - agent: Kodax
+      role: Release Engineer
+      instruction: "Perform a dry-run upload to TestPyPI (simulated)."
+    - agent: Lyra
+      role: Project Manager
+      instruction: "Tag the repository with v0.1.0 and update status.md."
+  objective: " finalizing the v0.1.0 release cycle."
+  next_steps:
+    - "Initiate Phase 2: Feedback and Iteration."
