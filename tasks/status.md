@@ -4,3 +4,4 @@ Current status:
 - Tests: PASSED (16/16)
 - Documentation: Updated
 - Core Modules: Models, Interfaces, Client, Exceptions all in place.
+- Release: v0.1.0 (Simulated) RELEASED
