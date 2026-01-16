@@ -28,36 +28,45 @@ We have completed a simulated v0.1.0 release of the Klipper SDK. We are now tran
 # Implementation Questionnaire (To Be Answered)
 
 ## 1. Architecture & Patterns
--   [ ] **Core Structure**: Hexagonal (ports & adapters) vs Layered (api -> service -> repo)?
--   [ ] **Dependency Injection**: `fastapi.Depends`, `lagom`, or custom?
--   [ ] **Shared Components**: `src/shared` as a module or standalone package?
--   [ ] **Design Patterns**: Factory, Strategy, etc. assignments?
--   [ ] **Configuration**: `pydantic-settings` (.env) vs others?
+-   [x] **Core Structure**: Hexagonal (ports & adapters) vs Layered (api -> service -> repo)?
+-   [x] **Dependency Injection**: `fastapi.Depends`, `lagom`, or custom?
+-   [x] **Shared Components**: `src/shared` as a module or standalone package?
+-   [x] **Design Patterns**: Factory, Strategy, etc. assignments?
+-   [x] **Configuration**: `pydantic-settings` (.env) vs others?
 
 ## 2. API Surface & Usability
--   [ ] **Sync Support**: Async-only or Wrapper?
--   [ ] **Naming Conventions**: `KlipperClient` vs `Client`?
--   [ ] **Python Version**: 3.10+ exclusive?
--   [ ] **Stability**: Decorators for experimental features?
--   [ ] **Middleware**: Custom hook system needed?
+-   [x] **Sync Support**: Async-only or Wrapper?
+-   [x] **Naming Conventions**: `KlipperClient` vs `Client`?
+-   [x] **Python Version**: 3.10+ exclusive?
+-   [x] **Stability**: Decorators for experimental features?
+-   [x] **Middleware**: Custom hook system needed?
 
 ## 3. Data Management (Pydantic v2)
--   [ ] **Validation**: Strict or Lax by default?
--   [ ] **Serialization**: Logic for MsgPack/Protobuf needed?
--   [ ] **Secrets**: `SecretStr` usage policy?
--   [ ] **DTOs**: Separate DTOs or shared Models?
--   [ ] **Custom Types**: Specific ID formats?
+-   [x] **Validation**: Strict or Lax by default?
+-   [x] **Serialization**: Logic for MsgPack/Protobuf needed?
+-   [x] **Secrets**: `SecretStr` usage policy?
+-   [x] **DTOs**: Separate DTOs or shared Models?
+-   [x] **Custom Types**: Specific ID formats?
 
 ## 4. Integration (httpx)
--   [ ] **Client Lifecycle**: Singleton, Context, or Dependency?
--   [ ] **Resilience**: `tenacity` integration for retries?
--   [ ] **Offline**: Error handling strategy?
--   [ ] **Headers**: Standardized headers list?
--   [ ] **Errors**: Mapping HTTP codes to Exceptions?
+-   [x] **Client Lifecycle**: Singleton, Context, or Dependency?
+-   [x] **Resilience**: `tenacity` integration for retries?
+-   [x] **Offline**: Error handling strategy?
+-   [x] **Headers**: Standardized headers list?
+-   [x] **Errors**: Mapping HTTP codes to Exceptions?
 
 ## 5. DevOps
--   [ ] **CLI**: Rich theme/verbosity standards?
--   [ ] **Testing**: directory split `tests/unit` vs `tests/integration`?
--   [ ] **Docs**: Google vs NumPy style?
--   [ ] **Release**: Definition of v0.2.0 MVP?
--   [ ] **Typing**: `py.typed` + `.pyi` stubs required?
+-   [x] **CLI**: Rich theme/verbosity standards?
+-   [x] **Testing**: directory split `tests/unit` vs `tests/integration`?
+-   [x] **Docs**: Google vs NumPy style?
+-   [x] **Release**: Definition of v0.2.0 MVP?
+-   [x] **Typing**: `py.typed` + `.pyi` stubs required?
+
+## Decisions Log
+- **Architecture**: Hexagonal
+- **DI**: fastapi.Depends
+- **Shared**: Module
+- **API**: Async+Wrapper, KlipperClient, 3.10+
+- **Data**: Strict, SecretStr, DTOs
+- **Integration**: Depends, tenacity, custom exceptions
+- **DevOps**: Rich, Split tests, Google style, py.typed

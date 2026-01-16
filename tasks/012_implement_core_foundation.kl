@@ -1,0 +1,35 @@
+---
+id: "012"
+title: Implement Core Foundation v0.2.0
+author: Antigravity
+recipient: Kodax
+status: open
+created: 2026-01-16
+dependencies:
+  - "011"
+---
+
+# Context
+The architectural direction for v0.2.0 has been "LOCKED" via Task 011. We are moving to a strict Hexagonal Architecture with Async-first API, Pydantic v2 strict validation, and `rich` CLI output.
+
+# Objectives
+1.  **Scaffold Architecture**: Create `src/core/{domain,adapters,service}` and `src/shared`.
+2.  **Implement Shared**:
+    -   Configuration loading (`pydantic-settings`).
+    -   Logging (`rich`).
+    -   Base Exceptions.
+3.  **Implement Core Domain**:
+    -   Define `ClipboardPort` (Interface).
+    -   Define core Models (Content, Meta).
+4.  **Implement Adapters**:
+    -   *InMemoryClipboardAdapter* (for testing).
+5.  **Refactor Main Entry**:
+    -   Update `src/klipper_sdk` to export the new client pattern.
+
+# Constraints
+-   All code must be `async`.
+-   All models `pydantic.ConfigDict(strict=True)`.
+-   No circular dependencies between Core and Adapters.
+
+# Resources
+-   `implementation_plan.md` (Source of Truth)
