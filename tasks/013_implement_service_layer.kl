@@ -1,0 +1,59 @@
+---
+id: "013"
+title: Implement Service Layer & KlipperClient
+author: Antigravity
+recipient: Lyra
+status: open
+created: 2026-01-17
+dependencies:
+  - "012"
+---
+
+# Context
+We have established the Core Foundation (Models, Interfaces, Adapters) in Task 012. Now we must implement the logic that glues them together: the `ClipboardService` and the public-facing `KlipperClient`.
+This task corresponds to the orchestration of valid business logic and user-friendly API surface.
+
+# Objectives
+1.  Define and Implement the **Service Layer**.
+2.  Refactor/Implement the **KlipperClient**.
+3.  Ensure robust Error Handling and Adapter Management.
+
+# Implementation Questionnaire (To Be Answered)
+
+## 1. Service Layer Logic (`src/core/service`)
+- [ ] **Scope**: Should `ClipboardService` be a singleton or instantiatable per-context?
+- [ ] **Transforms**: Will the service handle data transformations (e.g., image compression) internally or delegate?
+- [ ] **State**: Does the service need internal caching, or rely entirely on adapters?
+- [ ] **Events**: Should we implement an observer pattern for clipboard updates?
+- [ ] **sanitize**: Does the service strictly enforce UTF-8 for text, or allow bytes pass-through?
+
+## 2. KlipperClient Architecture (`src/klipper_sdk/client.py`)
+- [ ] **Interface**: Should `KlipperClient` expose a Fluent API or standard method calls?
+- [ ] **Async**: Is `async` usage mandatory for *all* public methods (with a separate Sync wrapper)?
+- [ ] **Context**: Must the client be used as a context manager (`async with KlipperClient()...`)?
+- [ ] **Factory**: Should the Client instantiate the Service/Adapter internally, or accept dependency injection?
+- [ ] **Multi-target**: Do we support writing to multiple clipboards (adapters) simultaneously?
+
+## 3. Adapter Integration (`src/core/adapters`)
+- [ ] **Selection**: How is the active adapter determined (Env Var > Platform Detection > Manual)?
+- [ ] **Fallback**: If the primary adapter fails, should it silently degrade to `InMemoryAdapter`?
+- [ ] **Lifecycle**: Do adapters require explicit `connect()`/`disconnect()` lifecycles managed by the Client?
+- [ ] **Capabilities**: Should adapters expose a "capabilities" map (e.g., `supports_images: bool`)?
+- [ ] **Retries**: Should the adapter handling logic include automatic retries (using `tenacity`)?
+
+## 4. Error Handling & Resilience
+- [ ] **Hierarchy**: Should all errors wrap into a base `KlipperError`?
+- [ ] **Network**: How do we handle transient network failures in the default configuration?
+- [ ] **Logging**: Should the SDK log internal errors to `stderr` or use a passive logger?
+- [ ] **Recovery**: If the clipboard daemon (e.g., Wayland) crashes, should the client attempt to reconnect?
+- [ ] **Types**: Do we distinguish between `ConnectionError`, `ValidationError`, and `clipboardError`?
+
+## 5. Testing & Verification
+- [ ] **Mocking**: Should we mock the Service Layer when testing the Client?
+- [ ] **Integration**: Do we need a "live" test suite that attempts real clipboard access (marked `@pytest.mark.live`)?
+- [ ] **CI**: How do we test platform-specific adapters (Wayland/X11) in headless CI environments?
+- [ ] **Contracts**: should we implement "contract tests" that all adapters must pass?
+- [ ] **Performance**: Are there benchmarks for large payloads (images/files)?
+
+# Decisions Log
+<!-- To be filled after user review -->
