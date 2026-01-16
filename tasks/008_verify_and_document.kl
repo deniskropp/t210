@@ -1,0 +1,22 @@
+- name: 008_verify_and_document
+  type: hand_off_task
+  created_at: "2026-01-16"
+  phase: testing_and_refinement_phase
+  status: pending
+  priority: high
+  context:
+    project_root: "/home/einrichten/t210"
+    orchestration_file: "docs/spec/klipper_sdk_orchestration.kl"
+    current_state: "Core implementation complete. Ready for final verification and docs."
+  recipients:
+    - agent: Kodax
+      role: Engineer
+      instruction: "Run full test suite and ensure coverage."
+    - agent: Lyra
+      role: Tech Writer
+      instruction: "Generate API documentation or update README."
+  objective: "Verify the SDK v0.1 implementation and ensure basic documentation is in place."
+  next_steps:
+    - "Run 'pytest' on all tests."
+    - "Update 'README.md' with usage examples based on the implemented client."
+    - "Tag version 0.1.0."
