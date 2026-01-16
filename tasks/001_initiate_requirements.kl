@@ -1,0 +1,22 @@
+- name: 001_initiate_requirements
+  type: hand_off_task
+  created_at: "2026-01-16"
+  phase: initial_phase
+  status: completed
+  priority: high
+  context:
+    project_root: "/home/einrichten/t210"
+    orchestration_file: "docs/spec/klipper_sdk_orchestration.kl"
+    current_state: "Requirements gathered and documented."
+  output_artifact: "docs/spec/klipper_sdk_requirements.kl"
+  recipients:
+    - agent: GPTASe
+      role: Task-Agnostic Step extractor (Functional)
+      instruction: "Identify and document all core functional functionalities for the Klipper SDK."
+    - agent: TASe
+      role: Task-Agnostic Step extractor (Non-functional)
+      instruction: "Identify and document all non-functional requirements (performance, security, etc.)."
+  objective: "Kickstart the 'define_sdk_requirements' plane by gathering initial requirements."
+  next_steps:
+    - "Proceed to 'design_sdk_architecture' plane."
+    - "Initiate task for architectural design."

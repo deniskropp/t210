@@ -1,0 +1,75 @@
+⫻kicklang:architecture
+- name: klipper_sdk_architecture
+  description: Architectural specification for the Klipper SDK.
+  source_task: tasks/002_design_architecture.kl
+  status: draft
+
+  architectural_patterns:
+    - name: modular_monorepo
+      description: "Codebase organized into distinct modules (Core, API, Shared) within a single repository."
+      justification: "Facilitates code sharing, consistent tooling, and clear separation of concerns."
+    
+    - name: async_first
+      description: "All I/O bound operations (IPC, File) are asynchronous using Python's asyncio."
+      justification: "Required for non-blocking UI integration and high-performance event handling."
+
+    - name: service_layer_pattern
+      description: "Business logic encapsulated in Services, exposed via a Facade (the SDK Client)."
+      justification: "Decouples the public API from the internal implementation details."
+
+  data_models:
+    - name: ClipboardContent
+      type: Pydantic Model
+      fields:
+        - name: data
+          type: Union[str, bytes]
+          description: "The actual clipboard content."
+        - name: mime_type
+          type: str
+          description: "MIME type of the content (e.g., 'text/plain')."
+        - name: metadata
+          type: Dict[str, Any]
+          description: "Additional metadata (source app, timestamp)."
+    
+    - name: HistoryItem
+      type: Pydantic Model
+      fields:
+        - name: id
+          type: UUID
+          description: "Unique identifier for the history item."
+        - name: timestamp
+          type: datetime
+          description: "Time of capture."
+        - name: content
+          type: ClipboardContent
+          description: "The content of the item."
+        - name: pinned
+          type: bool
+          description: "Whether the item is pinned in history."
+
+  api_interfaces:
+    - name: IClipboard
+      description: "Interface for direct clipboard interactions."
+      methods:
+        - "async def get_content(mime_type: Optional[str] = None) -> ClipboardContent"
+        - "async def set_content(content: ClipboardContent) -> bool"
+        - "async def clear() -> bool"
+        - "async def monitor() -> AsyncGenerator[ClipboardContent, None]"
+
+    - name: IHistory
+      description: "Interface for history management."
+      methods:
+        - "async def get_recent(limit: int = 10) -> List[HistoryItem]"
+        - "async def get_item(id: UUID) -> Optional[HistoryItem]"
+        - "async def delete_item(id: UUID) -> bool"
+        - "async def clear_history() -> bool"
+
+  module_structure:
+    - path: "src/klipper_sdk/core"
+      description: "Domain models and abstract interfaces."
+    - path: "src/klipper_sdk/client"
+      description: "Concrete implementation of the SDK client and services."
+    - path: "src/klipper_sdk/connection"
+      description: "Low-level IPC/Network handling (httpx/websockets)."
+    - path: "src/klipper_sdk/exceptions"
+      description: "Custom exception hierarchy."

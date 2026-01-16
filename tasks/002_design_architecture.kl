@@ -1,0 +1,20 @@
+- name: 002_design_architecture
+  type: hand_off_task
+  created_at: "2026-01-16"
+  phase: design_phase
+  status: completed
+  priority: high
+  context:
+    project_root: "/home/einrichten/t210"
+    orchestration_file: "docs/spec/klipper_sdk_orchestration.kl"
+    requirements_file: "docs/spec/klipper_sdk_requirements.kl"
+    current_state: "Architectural design documented."
+  output_artifact: "docs/spec/klipper_sdk_architecture.kl"
+  recipients:
+    - agent: Lyra
+      role: Architect / Prompt Engineer
+      instruction: "Propose architectural patterns, define API interfaces, and design data models based on the requirements."
+  objective: "Develop a comprehensive architectural specification for the Klipper SDK."
+  next_steps:
+    - "Proceed to 'implementation_phase'."
+    - "Create task for setting up the development environment."
