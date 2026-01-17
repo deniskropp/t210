@@ -1,0 +1,28 @@
+---
+id: "015"
+title: Verify and Release v0.2.0
+author: Antigravity
+recipient: Lyra
+status: open
+created: 2026-01-17
+dependencies:
+  - "014"
+---
+
+# Context
+The implementation phase for Klipper SDK v0.2.0 is concluding. This version introduced the Hexagonal Architecture, Service Layer, Pydantic v2 Models, Async Client, and comprehensive Documentation. We now need to verify the integrity of the codebase, ensure all documentation is accurate, and perform the release.
+
+# Objectives
+1.  **Code Verification**: Run full test suite (`pytest`) and strict type checking (`mypy`). Ensure 100% pass rate.
+2.  **Documentation Audit**: Verify that all artifacts requested in Task 014 exist and are populated (e.g., `docs/guides/configuration.md`, `ARCHITECTURE.md` or equivalent).
+3.  **Release Artifacts**: Build the source distribution and wheel for v0.2.0.
+4.  **Release Tag**: Tag the repository as `v0.2.0`.
+5.  **Status Update**: Update `tasks/status.md` to reflect the successful release.
+
+# Constraints
+-   Release must not proceed if there are *any* test failures or type errors.
+-   Documentation must match the actual API implementation.
+
+# Resources
+-   `tasks/014_documentation_implementation.kl` (Checklist reference)
+-   `pyproject.toml` (Version update required)
