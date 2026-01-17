@@ -1,0 +1,29 @@
+⫻kicklang:task
+- id: "016"
+  title: "Plan v0.3.0 - Event System & Monitoring"
+  author: "Lyra"
+  recipient: "Lyra"
+  status: "open"
+  created: "2026-01-17"
+  
+  context: |
+    The Klipper SDK v0.2.0 has been successfully released, providing core clipboard operations (Read, Write, Clear, Get History).
+    However, the "Event System" and real-time "Monitoring" capabilities defined in the requirements are currently missing.
+    The `KlipperClient` code explicitly notes that monitoring logic was deferred.
+    
+  objectives:
+    - "Analyze the 'event_system' requirements from `docs/spec/klipper_sdk_requirements.kl`."
+    - "Design the Observer Pattern implementation for the Service layer."
+    - "Define the API interface for `subscribe`, `unsubscribe`, and event callbacks."
+    - "Plan the integration with the existing `ClipboardService` and `KlipperClient`."
+    - "Create a detailed Implementation Plan (tasks/plans/016_plan.md) for v0.3.0."
+
+  constraints:
+    - "Must adhere to the existing Async/Await patterns."
+    - "Must maintain backward compatibility with v0.2.0 API."
+    - "Event system should be non-blocking."
+
+  resources:
+    - "docs/spec/klipper_sdk_requirements.kl"
+    - "src/klipper_sdk/client/client.py"
+    - "src/core/service/service.py"

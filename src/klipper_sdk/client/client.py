@@ -1,9 +1,21 @@
 import asyncio
-from typing import AsyncGenerator, List, Optional
+from typing import AsyncGenerator, List, Optional, Callable, Awaitable
 from uuid import UUID
 
 from src.core.domain.models import Content
 from src.core.service.service import ClipboardService
+from src.core.domain.observer import ClipboardObserver
+from src.core.domain.events import ClipboardEvent
+
+class CallbackObserver(ClipboardObserver):
+    """
+    Helper to wrap a callback function as an Observer.
+    """
+    def __init__(self, callback: Callable[[ClipboardEvent], Awaitable[None]]):
+        self._callback = callback
+
+    async def on_event(self, event: ClipboardEvent) -> None:
+        await self._callback(event)
 
 class KlipperClient:
     """
@@ -42,6 +54,17 @@ class KlipperClient:
         """
         return await self._service.get_history(limit=limit)
 
-    # Note: Monitoring logic to be re-implemented when Observer pattern is added to Service.
-    # For now, we omit it to keep scope clean or can add a placeholder if needed.
-    # monitor() removed for now as per plan to focus on core operations first.
+    def add_event_listener(self, callback: Callable[[ClipboardEvent], Awaitable[None]]) -> ClipboardObserver:
+        """
+        Registers a callback to be invoked on clipboard events.
+        Returns the observer instance which can be used to unsubscribe.
+        """
+        observer = CallbackObserver(callback)
+        self._service.subscribe(observer)
+        return observer
+
+    def remove_event_listener(self, observer: ClipboardObserver) -> None:
+        """
+        Unsubscribes a previously registered observer.
+        """
+        self._service.unsubscribe(observer)

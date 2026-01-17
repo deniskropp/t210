@@ -1,0 +1,30 @@
+⫻kicklang:task
+- id: "017"
+  title: "Implement v0.3.0 - Event System"
+  author: "Lyra"
+  recipient: "Kodax"
+  status: "open"
+  created: "2026-01-17"
+  
+  context: |
+    The planning phase for v0.3.0 (Task 016) is complete. 
+    A detailed implementation plan exists in `tasks/plans/016_plan.md`.
+    We are now ready to implement the Observer Pattern in the Core Service and expose it via the Client.
+    
+  objectives:
+    - "Execute the steps defined in `tasks/plans/016_plan.md`."
+    - "Create `src/core/domain/events.py` with `EventType` and `ClipboardEvent`."
+    - "Create `src/core/domain/observer.py` with `ClipboardObserver` protocol."
+    - "Update `ClipboardService` in `src/core/service/service.py` to support subscriptions and notifications."
+    - "Update `KlipperClient` in `src/klipper_sdk/client/client.py` to allow event listening."
+    - "Verify with new tests in `tests/test_events.py`."
+
+  constraints:
+    - "Strictly follow the architectural decisions in the plan."
+    - "Ensure async compatibility."
+    - "Maintain high code quality and typing standards."
+
+  resources:
+    - "tasks/plans/016_plan.md"
+    - "src/core/service/service.py"
+    - "src/klipper_sdk/client/client.py"

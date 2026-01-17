@@ -1,6 +1,21 @@
 # Changelog
 
-## v0.2.0 (In Development)
+## v0.4.0
+
+### Features
+- **Linux Support**: Added `LinuxClipboardAdapter` using `wl-clipboard` (Wayland) or `xclip`/`xsel` (X11).
+- **Auto-Detection**: Updated `ClientFactory` to automatically detect and use the Linux adapter on compatible systems.
+- **Async Process**: Implemented non-blocking clipboard operations using `asyncio.subprocess`.
+
+## v0.3.0
+
+### Features
+- **Event System**: Implemented Observer Pattern in `ClipboardService`.
+- **Real-time Monitoring**: Added `add_event_listener` and `remove_event_listener` to `KlipperClient`.
+- **Domain Events**: Introduced `ClipboardEvent` and `EventType` models.
+- **Service Layer**: Added subscription management (`subscribe`, `unsubscribe`) to `ClipboardService`.
+
+## v0.2.0
 
 ### Features
 - Introduced **Hexagonal Architecture**.

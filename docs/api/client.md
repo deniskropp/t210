@@ -56,3 +56,23 @@ Retrieves recent clipboard history.
 - **Args**:
     - `limit` (int): Maximum number of entries to return. Default is 10.
 - **Returns**: List of `Content` objects.
+
+#### `add_event_listener`
+
+```python
+def add_event_listener(self, callback: Callable[[ClipboardEvent], Awaitable[None]]) -> ClipboardObserver
+```
+
+Registers a callback to be invoked on clipboard events.
+
+- **Args**:
+    - `callback`: An async function that accepts a `ClipboardEvent`.
+- **Returns**: A `ClipboardObserver` handle (used for unsubscribing).
+
+#### `remove_event_listener`
+
+```python
+def remove_event_listener(self, observer: ClipboardObserver) -> None
+```
+
+Unsubscribes a previously registered observer.

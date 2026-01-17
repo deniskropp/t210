@@ -1,3 +1,4 @@
+import sys
 from src.core.adapters.in_memory import InMemoryClipboardAdapter
 from src.core.service.service import ClipboardService
 from src.klipper_sdk.client.client import KlipperClient
@@ -12,11 +13,21 @@ def create_client(adapter: str = "auto") -> KlipperClient:
                  'auto' generally attempts to treat platform specific first, falling back to in_memory.
     """
     
-    # Simple logic for now: default to InMemory if auto or explicit
-    # Later we will add:
-    # if adapter == "auto":
-    #    try_platform_adapters()...
+    adapter_instance = None
     
-    adapter_instance = InMemoryClipboardAdapter()
+    if adapter == "auto":
+        if sys.platform == "linux":
+            try:
+                from src.core.adapters.linux import LinuxClipboardAdapter
+                adapter_instance = LinuxClipboardAdapter()
+            except ImportError:
+                # Log warning: No system clipboard tool found, falling back.
+                pass
+            except Exception:
+                pass
+    
+    if adapter_instance is None:
+        adapter_instance = InMemoryClipboardAdapter()
+
     service = ClipboardService(adapter=adapter_instance)
     return KlipperClient(service=service)

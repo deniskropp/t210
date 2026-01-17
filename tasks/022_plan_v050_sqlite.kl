@@ -1,0 +1,31 @@
+⫻kicklang:task
+- id: "022"
+  title: "Plan v0.5.0 - SQLite Adapter"
+  author: "Lyra"
+  recipient: "Lyra"
+  status: "open"
+  created: "2026-01-17"
+  
+  context: |
+    v0.4.0 enabled Linux clipboard interaction, but history is currently ephemeral (lost on restart).
+    The goal for v0.5.0 is to introduce persistent storage using a **SQLite Adapter**.
+    This introduces an architectural challenge: We likely want to keep using the `LinuxAdapter` for *current* clipboard operations (read/write to OS) while using SQLite for *history* persistence.
+    
+  objectives:
+    - "Evaluate architectural options for combining System Clipboard (OS) and Persistence (DB)."
+        - "Option A: Service manages two adapters (`SystemPort`, `StoragePort`)."
+        - "Option B: Composite/Decorator Adapter."
+    - "Design the SQLite schema (Tables for `Content` and `Metadata`)."
+    - "Select appropriate async driver (likely `aiosqlite`)."
+    - "Plan the dependency updates (`pyproject.toml`)."
+    - "Create a detailed Implementation Plan (tasks/plans/022_plan.md)."
+
+  constraints:
+    - "Must maintain async IO."
+    - "Must not break existing Linux clipboard functionality."
+    - "Database file should be stored in a standard user data location (XDG)."
+
+  resources:
+    - "src/core/service/service.py"
+    - "src/core/domain/ports.py"
+    - "docs/spec/klipper_sdk_requirements.kl"

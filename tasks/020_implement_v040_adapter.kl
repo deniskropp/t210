@@ -1,0 +1,30 @@
+⫻kicklang:task
+- id: "020"
+  title: "Implement v0.4.0 - Linux Adapter"
+  author: "Lyra"
+  recipient: "Kodax"
+  status: "open"
+  created: "2026-01-17"
+  
+  context: |
+    The plan for v0.4.0 (Task 019) is complete.
+    We need to implement the `LinuxClipboardAdapter` and update the factory to use it.
+    
+  objectives:
+    - "Execute the steps defined in `tasks/plans/019_plan.md`."
+    - "Create `src/core/adapters/linux.py` implementing `ClipboardPort`."
+    - "Implement tool detection (Wayland vs X11)."
+    - "Implement `read`, `write`, `clear` using `asyncio.subprocess`."
+    - "Implement session-based `history`."
+    - "Update `src/klipper_sdk/factory.py`."
+    - "Create unit tests in `tests/test_linux_adapter.py` (mocking subprocess)."
+
+  constraints:
+    - "Do not introduce heavy dependencies (like `pyperclip` or `Qt`)."
+    - "Ensure async execution."
+    - "Handle 'tool not found' errors gracefully."
+
+  resources:
+    - "tasks/plans/019_plan.md"
+    - "src/core/domain/ports.py"
+    - "src/klipper_sdk/factory.py"

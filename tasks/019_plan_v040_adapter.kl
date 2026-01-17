@@ -1,0 +1,29 @@
+⫻kicklang:task
+- id: "019"
+  title: "Plan v0.4.0 - Linux Clipboard Adapter"
+  author: "Lyra"
+  recipient: "Lyra"
+  status: "open"
+  created: "2026-01-17"
+  
+  context: |
+    v0.3.0 delivered the Event System.
+    The current SDK only supports an `InMemoryAdapter`, which is insufficient for real-world usage.
+    To satisfy the "Retrieve current clipboard content" requirement on the user's platform (Linux), we need a concrete OS-level adapter.
+    
+  objectives:
+    - "Design a `LinuxClipboardAdapter` that implements `ClipboardPort`."
+    - "Determine the best strategy for async clipboard access on Linux (likely `asyncio.create_subprocess_exec` wrapping `wl-clipboard` or `xclip`)."
+    - "Plan the `Factory` update to auto-detect Linux and use this adapter."
+    - "Consider error handling (missing system dependencies)."
+    - "Create a detailed Implementation Plan (tasks/plans/019_plan.md) for v0.4.0."
+
+  constraints:
+    - "Must be non-blocking (async)."
+    - "Prefer standard system tools (`wl-copy`, `xclip`) over heavy python dependencies if possible, or use a lightweight modern lib."
+    - "Maintain architectural separation (Adapter pattern)."
+
+  resources:
+    - "docs/spec/klipper_sdk_requirements.kl"
+    - "src/core/domain/ports.py"
+    - "src/core/adapters/in_memory.py"

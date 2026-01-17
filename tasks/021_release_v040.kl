@@ -1,0 +1,23 @@
+⫻kicklang:task
+- id: "021"
+  title: "Release v0.4.0"
+  author: "Lyra"
+  recipient: "Kodax"
+  status: "open"
+  created: "2026-01-17"
+  
+  context: |
+    The Linux Adapter (v0.4.0) has been implemented and verified.
+    We need to perform the final release steps.
+    
+  objectives:
+    - "Update `pyproject.toml` version to 0.4.0."
+    - "Update `docs/CHANGELOG.md` with v0.4.0 changes."
+    - "Update `tasks/status.md` to released status."
+
+  constraints:
+    - "Follow semantic versioning."
+
+  resources:
+    - "pyproject.toml"
+    - "docs/CHANGELOG.md"
