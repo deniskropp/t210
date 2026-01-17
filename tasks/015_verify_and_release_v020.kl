@@ -3,7 +3,7 @@ id: "015"
 title: Verify and Release v0.2.0
 author: Antigravity
 recipient: Lyra
-status: open
+status: closed
 created: 2026-01-17
 dependencies:
   - "014"
