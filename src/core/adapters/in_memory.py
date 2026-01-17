@@ -7,7 +7,7 @@ class InMemoryClipboardAdapter(ClipboardPort):
     In-memory implementation of ClipboardPort.
     Useful for testing and development without side effects.
     """
-    def __init__(self):
+    def __init__(self) -> None:
         self._storage: List[Content] = []
         self._current: Optional[Content] = None
 
