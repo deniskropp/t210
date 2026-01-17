@@ -1,42 +1,37 @@
-# Welcome to Klipper SDK
+# Klipper SDK Documentation
 
-A comprehensive, modern Python SDK for the Klipper clipboard manager.
+Welcome to the **Klipper SDK** documentation. This SDK provides a Pythonic interface for interacting with system clipboards (and potential future remote clipboards) through a unified, hexagonal architecture.
 
-## Overview
+## Sections
 
-The Klipper SDK provides a robust, asynchronous interface for interacting with the Klipper clipboard manager. It is designed with modern Python practices in mind, featuring full type hinting, Pydantic v2 models, and an asyncio-first approach.
+### [API Reference](api/client.md)
+Detailed reference for the `KlipperClient`, Domain Models, and Exceptions.
 
-## Key Features
+### [Architecture](architecture/overview.md)
+Understand the core design, Hexagonal Architecture, and how the Service Layer orchestrates Adapters.
 
-- **Asynchronous API**: Built on `asyncio` for non-blocking operations.
-- **Type Safety**: Fully typed codebase utilizing strict MyPy settings.
-- **Modern Data Models**: Uses Pydantic v2 for validation and serialization.
-- **Rich CLI Support**: Integrated with `rich` for beautiful terminal output.
-
-## Installation
-
-```bash
-pip install klipper-sdk
-```
+### [Guides](guides/configuration.md)
+- [Configuration](guides/configuration.md)
+- [Error Handling](guides/error_handling.md)
+- [Development & Testing](guides/development.md)
 
 ## Quick Start
 
 ```python
 import asyncio
-from klipper_sdk.client.client import KlipperClient
-from klipper_sdk.core.models import ClipboardContent
+from src.klipper_sdk.factory import create_client
+from src.core.domain.models import Content
 
 async def main():
-    client = KlipperClient()
+    # Create a client (auto-selects best adapter)
+    client = create_client()
 
-    # Set content
-    content = ClipboardContent(data="Hello Klipper!", mime_type="text/plain")
-    await client.set_content(content)
-    print("Content set!")
+    # Write to clipboard
+    await client.set_content(Content.from_text("Hello Klipper!"))
 
-    # Retrieve content
-    fetched = await client.get_content()
-    print(f"Retrieved: {fetched.data}")
+    # Read from clipboard
+    content = await client.get_content()
+    print(content.data)
 
 if __name__ == "__main__":
     asyncio.run(main())
