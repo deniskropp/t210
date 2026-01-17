@@ -3,7 +3,7 @@ id: "012"
 title: Implement Core Foundation v0.2.0
 author: Antigravity
 recipient: Kodax
-status: open
+status: completed
 created: 2026-01-16
 dependencies:
   - "011"
