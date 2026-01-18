@@ -17,6 +17,7 @@ dependencies = [
   "httpx",
   "pydantic>=2.0.0",
   "rich",
+  "aiosqlite",
 ]
 
 [project.optional-dependencies]

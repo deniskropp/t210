@@ -30,5 +30,11 @@ class Settings(BaseSettings):
         description="Default timeout for API requests"
     )
 
+    # Storage Settings
+    DB_PATH: str = Field(
+        default="klipper.db", # Simplified default, real path handling usually in logic or env var
+        description="Path to the SQLite database"
+    )
+
 # Singleton instance
 settings = Settings()

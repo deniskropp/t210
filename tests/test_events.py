@@ -2,14 +2,21 @@ import pytest
 import asyncio
 from src.core.service.service import ClipboardService
 from src.core.adapters.in_memory import InMemoryClipboardAdapter
+from src.core.domain.ports import HistoryPort
 from src.klipper_sdk.client.client import KlipperClient
 from src.core.domain.events import ClipboardEvent, EventType
 from src.core.domain.models import Content
 
+class MockHistoryAdapter(HistoryPort):
+    async def add(self, content): pass
+    async def get_recent(self, limit=10): return []
+    async def clear(self): pass
+
 @pytest.fixture
 def service():
     adapter = InMemoryClipboardAdapter()
-    return ClipboardService(adapter)
+    history = MockHistoryAdapter()
+    return ClipboardService(adapter, history_adapter=history)
 
 @pytest.fixture
 def client(service):

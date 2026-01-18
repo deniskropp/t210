@@ -1,5 +1,5 @@
 import pytest
-from klipper_sdk.exceptions.base import (
+from src.klipper_sdk.exceptions.base import (
     KlipperSDKError,
     ConnectionError,
     DataFormatError,

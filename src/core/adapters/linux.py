@@ -11,7 +11,6 @@ class LinuxClipboardAdapter(ClipboardPort):
     
     def __init__(self) -> None:
         self._tool, self._cmds = self._detect_tool()
-        self._history_storage: List[Content] = []
         
     def _detect_tool(self) -> Tuple[str, dict]:
         """
@@ -73,8 +72,6 @@ class LinuxClipboardAdapter(ClipboardPort):
 
     async def write(self, content: Content) -> None:
         await self._run_command(self._cmds["write"], input_data=content.data)
-        # Add to session history
-        self._history_storage.insert(0, content)
 
     async def clear(self) -> None:
         # For xclip clear, we might just write empty string if the command mapping is tricky
@@ -83,8 +80,3 @@ class LinuxClipboardAdapter(ClipboardPort):
              await self._run_command(["xclip", "-selection", "clipboard"], input_data="")
         else:
              await self._run_command(self._cmds["clear"])
-        
-        self._history_storage.clear()
-
-    async def history(self, limit: int = 10) -> List[Content]:
-        return self._history_storage[:limit]

@@ -65,8 +65,3 @@ async def test_write_success(mock_shutil_which, mock_subprocess):
     # Verify command called
     args, kwargs = mock_subprocess.call_args
     assert "wl-copy" in args
-    
-    # Verify history
-    history = await adapter.history()
-    assert len(history) == 1
-    assert history[0].data == "Test Write"

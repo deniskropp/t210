@@ -29,15 +29,38 @@ class ClipboardPort(ABC):
     @abstractmethod
     async def clear(self) -> None:
         """
-        Clears the clipboard content.
+        Clears the system clipboard content.
+        """
+        pass
+
+
+class HistoryPort(ABC):
+    """
+    Port (Interface) for History Persistence Adapters.
+    Encapsulates all interaction with the long-term storage (DB).
+    """
+
+    @abstractmethod
+    async def add(self, content: Content) -> None:
+        """
+        Adds a new entry to the history.
+        Args:
+            content: The content object to add.
         """
         pass
 
     @abstractmethod
-    async def history(self, limit: int = 10) -> List[Content]:
+    async def get_recent(self, limit: int = 10) -> List[Content]:
         """
-        Retrieves the history of clipboard entries.
+        Retrieves recent history entries.
         Args:
             limit: Maximum number of entries to return.
+        """
+        pass
+
+    @abstractmethod
+    async def clear(self) -> None:
+        """
+        Clears the history storage.
         """
         pass
