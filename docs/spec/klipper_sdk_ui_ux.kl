@@ -1,0 +1,86 @@
+⫻kicklang:ui_ux
+- name: klipper_sdk_ui_ux
+  description: UI/UX Specification and Guidelines for Klipper SDK.
+  source_task: tasks/023_create_ui_ux_flows.kl
+  status: draft
+  
+  visual_identity:
+    theme: "Modern CLI"
+    libraries: 
+      - name: "rich"
+        role: "Terminal formatting"
+    palette:
+      primary: "cyan"
+      secondary: "blue"
+      accent: "magenta"
+      success: "green"
+      warning: "yellow"
+      error: "red"
+      dim: "dim white"
+
+  cli_components:
+    - name: HistoryTable
+      description: "Tabular display of clipboard history."
+      columns:
+        - name: "ID"
+          style: "dim cyan"
+          format: "Short UUID (first 8 chars)"
+        - name: "Time"
+          style: "blue"
+          format: "Relative (e.g., '2 mins ago')"
+        - name: "Type"
+          style: "magenta"
+          format: "MIME type icon/text (e.g., 📝 Text, 🖼️ Image)"
+        - name: "Content Preview"
+          style: "white"
+          format: "Truncated to 50 chars, newlines replaced with '↵'"
+    
+    - name: ItemDetail
+      description: "Detailed view of a single clipboard item."
+      layout: "Panel"
+      sections:
+        - header: "Metadata (ID, Timestamp, App Source)"
+        - body: "Full content (with syntax highlighting if text)"
+        - footer: "Actions (Copy, Delete, Pin)"
+
+    - name: MonitorStream
+      description: "Live view of incoming clipboard events."
+      style: "Log-style output"
+      format: "[Timestamp] [Event Type] Details"
+      example: "[10:22:45] [COPY] Text copied from 'Firefox' (124 chars)"
+
+  ux_guidelines:
+    - name: AsyncFeedback
+      principle: "Always acknowledge actions immediately."
+      implementation:
+        - "Use spinners for operations taking > 500ms."
+        - "For background sync, show specific status icons/text."
+    
+    - name: ErrorHandling
+      principle: "Errors should be actionable."
+      format:
+        - "Title: What went wrong (e.g., 'Connection Failed')."
+        - "Body: Why it happened (e.g., 'Daemon not responding at port 8080')."
+        - "Suggestion: How to fix (e.g., 'Run `klipperd start`')."
+
+    - name: ContentRepresentation
+      principle: "Respect data types."
+      rules:
+        - "Text: Show preview, handle encodings gracefully."
+        - "Images: Show dimensions, size, and thumbnail if possible (via terminal protocols) or placeholder."
+        - "Binary: Show hexdump preview or file size."
+
+  flows:
+    - name: SearchHistory
+      steps:
+        - "User invokes `klipper search 'query'`."
+        - "System displays spinner 'Searching...'."
+        - "System renders `HistoryTable` with matching results."
+        - "Empty state: 'No items found matching "query"'."
+
+    - name: InteractiveSelection
+      steps:
+        - "User invokes `klipper select`."
+        - "System displays interactive list (arrow keys navigation)."
+        - "User presses Enter."
+        - "System copies selected item to clipboard and notifies 'Copied!'."

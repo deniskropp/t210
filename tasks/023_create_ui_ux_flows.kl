@@ -1,0 +1,20 @@
+- name: 023_create_ui_ux_flows
+  type: design_task
+  created_at: "2026-01-18"
+  phase: design_phase
+  status: completed
+  priority: medium
+  context:
+    project_root: "/home/einrichten/t210"
+    orchestration_file: "docs/spec/klipper_sdk_orchestration.kl"
+    architecture_file: "docs/spec/klipper_sdk_architecture.kl"
+  output_artifact: "docs/spec/klipper_sdk_ui_ux.kl"
+  recipients:
+    - agent: Aurora
+      role: Designer
+      instruction: "Design the user interface and user experience flows for SDK CLI tools and integration guidelines."
+  objective: "Create a comprehensive UI/UX specification for the Klipper SDK ecosystem."
+  constraints:
+    - "Must use 'rich' library for CLI designs."
+    - "Must be accessible."
+    - "Focus on Developer Experience (DX) and End-User Experience for SDK consumers."

@@ -1,0 +1,19 @@
+- name: 024_release_v050
+  type: release_task
+  created_at: "2026-01-18"
+  phase: implementation_phase
+  status: completed
+  priority: high
+  context:
+    project_root: "/home/einrichten/t210"
+    orchestration_file: "docs/spec/klipper_sdk_orchestration.kl"
+  output_artifact: "dist/v0.5.0"
+  recipients:
+    - agent: Kodax
+      role: Release Engineer
+      instruction: "Bump version to 0.5.0, update changelog, and verify integrity."
+  objective: "Release version 0.5.0 of the Klipper SDK with SQLite persistence."
+  constraints:
+    - "Must update pyproject.toml."
+    - "Must update CHANGELOG.md."
+    - "Must update status.md."

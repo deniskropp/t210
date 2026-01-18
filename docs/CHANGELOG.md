@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.5.0
+
+### Features
+- **SQLite Persistence**: Introduced `SQLiteStorage` adapter for persistent history management.
+- **Dual-Port Architecture**: Separated `ClipboardPort` (System) and `HistoryPort` (Storage).
+- **Schema Enforcement**: Added strict SQL schema with versioning for the history database.
+- **Auto-Persist**: Updated `KlipperClient` factory to use SQLite storage by default in `auto` mode.
+
 ## v0.4.0
 
 ### Features

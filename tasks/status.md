@@ -8,4 +8,7 @@ Current status:
 - Release: v0.3.0 (Simulated) RELEASED
 - SDK v0.4.0 Implementation (Linux Adapter): COMPLETE
 - Release: v0.4.0 (Simulated) RELEASED
-- Current Focus: Awaiting next direction
+- SDK v0.5.0 Implementation (SQLite Persistence): COMPLETE
+- Release: v0.5.0 RELEASED
+- Design Task 023 (UI/UX Flows): COMPLETE
+- Current Focus: Ready for implementation of UI/UX flows (v0.6.0)
