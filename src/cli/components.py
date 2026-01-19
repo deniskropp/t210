@@ -1,86 +1,103 @@
-from datetime import datetime, timezone
-from typing import List
-
+from typing import List, Any, Optional
 from rich.table import Table
 from rich.panel import Panel
+from rich.layout import Layout
 from rich.text import Text
-from rich.syntax import Syntax
 from rich.console import RenderableType
+from rich.syntax import Syntax
 
 from src.core.domain.models import Content
 
-def _format_relative_time(dt: datetime) -> str:
-    now = datetime.now(timezone.utc)
-    diff = now - dt
-    
-    seconds = diff.total_seconds()
-    if seconds < 60:
-        return "Just now"
-    elif seconds < 3600:
-        minutes = int(seconds / 60)
-        return f"{minutes} min{'s' if minutes > 1 else ''} ago"
-    elif seconds < 86400:
-        hours = int(seconds / 3600)
-        return f"{hours} hour{'s' if hours > 1 else ''} ago"
-    else:
-        days = int(seconds / 86400)
-        return f"{days} day{'s' if days > 1 else ''} ago"
-
 class HistoryTable:
+    """
+    Renders the clipboard history as a table.
+    """
     def __init__(self, title: str = "Clipboard History"):
         self.title = title
 
     def render(self, items: List[Content]) -> Table:
         table = Table(title=self.title, expand=True)
-        
+
+        # Columns as per spec: ID, Time, Type, Content Preview
         table.add_column("ID", style="dim cyan", no_wrap=True)
-        table.add_column("Time", style="blue")
+        table.add_column("Time", style="blue", no_wrap=True)
         table.add_column("Type", style="magenta")
         table.add_column("Content Preview", style="white")
 
         for item in items:
-            preview = item.data[:50].replace("\n", "↵")
-            if len(item.data) > 50:
-                preview += "..."
-                
-            type_icon = "📝 " if "text" in item.metadata.content_type else "📦 "
-            type_display = f"{type_icon}{item.metadata.content_type}"
+            # Format ID: Short UUID (first 8 chars)
+            item_id = str(item.metadata.id)[:8]
             
-            table.add_row(
-                str(item.metadata.id)[:8],
-                _format_relative_time(item.metadata.created_at),
-                type_display,
-                preview
-            )
+            # Format Time: Relative (simulated or real)
+            # Assuming timestamp is a datetime object in metadata
+            time_str = item.metadata.created_at.strftime("%H:%M:%S") # Simplification for now, relative time logic can be added
             
+            # Format Type
+            content_type = item.metadata.content_type
+            type_icon = "📝" if "text" in content_type else "📁"
+            type_str = f"{type_icon} {content_type}"
+
+            # Format Content Preview
+            raw_content = item.data.decode("utf-8", errors="replace") if isinstance(item.data, bytes) else str(item.data)
+            preview = raw_content[:50].replace("\n", "↵")
+            
+            table.add_row(item_id, time_str, type_str, preview)
+
         return table
 
+
 class ItemDetail:
+    """
+    Renders detailed view of a single clipboard item.
+    """
     def __init__(self, item: Content):
         self.item = item
 
     def render(self) -> Panel:
+        # Layout: Header (Metadata), Body (Content), Footer (Actions)
+        
         # Header
-        meta = self.item.metadata
-        header = f"[bold cyan]ID:[/bold cyan] {meta.id} | [bold blue]Time:[/bold blue] {meta.created_at.strftime('%Y-%m-%d %H:%M:%S UTC')}"
-        if meta.source_app:
-            header += f" | [bold magenta]Source:[/bold magenta] {meta.source_app}"
+        item_id = str(self.item.metadata.id)
+        timestamp = self.item.metadata.created_at.strftime("%Y-%m-%d %H:%M:%S")
+        source = self.item.metadata.source_app or "Unknown"
+        header_text = f"ID: [cyan]{item_id}[/cyan] | Time: [blue]{timestamp}[/blue] | Source: [green]{source}[/green]"
 
         # Body
-        if "text" in meta.content_type or "json" in meta.content_type:
-             # Basic syntax highlighting guess
-             lexer = "json" if "json" in meta.content_type else "text"
-             body = Syntax(self.item.data, lexer, theme="monokai", word_wrap=True)
-        else:
-            body = Text(self.item.data)
+        raw_content = self.item.data.decode("utf-8", errors="replace") if isinstance(self.item.data, bytes) else str(self.item.data)
+        # Try highlighting if it looks like code, else plain text
+        body_content = Syntax(raw_content, "python", theme="monokai", line_numbers=True) if "python" in self.item.metadata.content_type else raw_content
 
         # Footer
-        footer = "[dim]Actions: [bold white]c[/bold white]opy | [bold white]d[/bold white]elete | [bold white]p[/bold white]in[/dim]"
+        footer_text = "[bold]Actions:[/bold] [yellow](c)[/yellow] Copy | [red](d)[/red] Delete | [blue](p)[/blue] Pin"
 
-        return Panel(
-            body,
-            title=header,
-            subtitle=footer,
-            expand=True,
-            border_style="cyan"
+        # Combine into a Panel
+        # For a simple Detail view, a Panel wrapping a Group or Text is sufficient. 
+        # But to strictly separate Header/Body/Footer visually, existing Panel is good.
+        
+        content = Text.assemble(
+            Text.from_markup(header_text),
+            "\n\n",
+            body_content if isinstance(body_content, Syntax) else Text(body_content),
+            "\n\n",
+            Text.from_markup(footer_text)
         )
+        
+        return Panel(content, title=f"Item Details: {self.item.metadata.content_type}", expand=True, border_style="cyan")
+
+
+class ErrorPanel:
+    """
+    Renders an actionable error message.
+    """
+    def __init__(self, title: str, message: str, suggestion: Optional[str] = None):
+        self.title = title
+        self.message = message
+        self.suggestion = suggestion
+
+    def render(self) -> Panel:
+        content = Text()
+        content.append(f"{self.message}\n", style="bold red")
+        if self.suggestion:
+            content.append(f"\nSuggestion: {self.suggestion}", style="yellow italic")
+            
+        return Panel(content, title=f"Error: {self.title}", border_style="red", expand=True)

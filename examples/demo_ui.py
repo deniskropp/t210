@@ -1,60 +1,67 @@
-from datetime import datetime, timedelta, timezone
+import asyncio
+import uuid
+from datetime import datetime
 from rich.console import Console
+from rich.panel import Panel
 
 from src.core.domain.models import Content, Metadata
-from src.cli import HistoryTable, ItemDetail, MonitorStream
+from src.cli.components import HistoryTable, ItemDetail
+from src.cli.feedback import AsyncFeedback
+from src.cli.monitor import MonitorStream
 
-def main():
+async def run_demo():
     console = Console()
+    console.clear()
+    console.rule("[bold cyan]Klipper SDK UI/UX Demo[/bold cyan]")
 
+    # 1. Feedback Demo
+    feedback = AsyncFeedback(console)
+    async with feedback.spinner("Simulating loading clipboard history..."):
+        await asyncio.sleep(1.0) # Simulate work
+
+    # 2. History Table Demo
+    console.print("\n[bold]1. History Table Component[/bold]")
+    
     # Create dummy data
-    now = datetime.now(timezone.utc)
-    items = [
+    dummy_items = [
         Content(
-            data="Hello world!",
-            metadata=Metadata(
-                created_at=now,
-                content_type="text/plain",
-                source_app="Terminal"
-            )
+            data="Hello Klipper!",
+            metadata=Metadata(id=uuid.UUID("12345678-1234-5678-1234-567812345678"), created_at=datetime.now(), content_type="text/plain", source_app="Terminal")
         ),
         Content(
-            data="def foo():\n    return 'bar'",
-            metadata=Metadata(
-                created_at=now - timedelta(minutes=5),
-                content_type="text/x-python",
-                source_app="VS Code"
-            )
+            data="https://example.com",
+            metadata=Metadata(id=uuid.UUID("abcdef09-1234-5678-1234-567812345678"), created_at=datetime.now(), content_type="text/plain", source_app="Firefox")
         ),
         Content(
-            data='{"key": "value", "list": [1, 2, 3]}',
-            metadata=Metadata(
-                created_at=now - timedelta(days=1),
-                content_type="application/json",
-                source_app="Postman"
-            )
-        )
+            data="<binary image placeholder>",
+            metadata=Metadata(id=uuid.UUID("7890abcd-1234-5678-1234-567812345678"), created_at=datetime.now(), content_type="image/png", source_app="GIMP")
+        ),
     ]
 
-    # 1. Test HistoryTable
-    console.rule("[bold cyan]Test: HistoryTable")
     history_table = HistoryTable()
-    console.print(history_table.render(items))
-    console.print()
+    console.print(history_table.render(dummy_items))
 
-    # 2. Test ItemDetail (Python code)
-    console.rule("[bold cyan]Test: ItemDetail")
-    detail = ItemDetail(items[1])
-    console.print(detail.render())
-    console.print()
+    # 3. Item Detail Demo
+    console.print("\n[bold]2. Item Detail Component[/bold]")
+    
+    detail_item = dummy_items[0]
+    item_detail = ItemDetail(detail_item)
+    console.print(item_detail.render())
 
-    # 3. Test MonitorStream
-    console.rule("[bold cyan]Test: MonitorStream")
+    # 4. Monitor Stream Demo
+    console.print("\n[bold]3. Monitor Stream Component (Simulation)[/bold]")
     monitor = MonitorStream()
-    console.print(monitor.format_event(now, "copy", "Text copied from 'Chrome' (15 chars)"))
-    console.print(monitor.format_event(now, "sync", "Synced 1 item to cloud"))
-    console.print(monitor.format_event(now, "error", "Connection failed"))
-    console.print()
+    
+    events = [
+        (datetime.now(), "COPY", "Text copied from 'Chrome' (150 chars)"),
+        (datetime.now(), "SYNC", "Synced 1 item to cloud"),
+        (datetime.now(), "ERROR", "Failed to connect to daemon"),
+    ]
+    
+    for ts, type_, details in events:
+        console.print(monitor.format_event(ts, type_, details))
+
+    console.rule("[bold cyan]Demo Complete[/bold cyan]")
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(run_demo())
