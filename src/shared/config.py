@@ -26,7 +26,7 @@ class Settings(BaseSettings):
     
     # API Settings (Example)
     API_TIMEOUT_SECONDS: float = Field(
-        default=30.0,
+        default=300.0,
         description="Default timeout for API requests"
     )
 

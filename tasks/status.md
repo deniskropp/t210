@@ -11,4 +11,5 @@ Current status:
 - SDK v0.5.0 Implementation (SQLite Persistence): COMPLETE
 - Release: v0.5.0 RELEASED
 - Design Task 023 (UI/UX Flows): COMPLETE
-- Current Focus: Ready for implementation of UI/UX flows (v0.6.0)
+- Task 025 (UI/UX Spec Routing): CREATED
+- Current Focus: Ready for Lyra to plan implementation of UI/UX Spec (Task 025)
